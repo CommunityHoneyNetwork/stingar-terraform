@@ -1,0 +1,12 @@
+.terraform/
+*.auto.tfvars
+*.retry
+terraform.tfstate*
+.terraform.tfstate*
+duke.tfvars
+deploy.tfvars
+honeypot.tfvars
+userdata.txt
+*.bak
+notes/
+*.swp

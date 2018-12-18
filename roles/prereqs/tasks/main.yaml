@@ -1,0 +1,23 @@
+---
+- name: Install aptitude
+  package:
+    name: aptitude
+  register: apt_res
+  retries: 5
+  until: apt_res | success
+
+- name: Upgrade all packages to the latest version
+  apt:
+    name: "*"
+    state: latest
+    update_cache: true
+    cache_valid_time: 3600
+
+- name: Install docker
+  package:
+    name: docker.io
+
+- name: Restart Docker
+  service:
+    name: docker
+    state: restarted

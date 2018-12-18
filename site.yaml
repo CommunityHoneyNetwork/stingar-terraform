@@ -1,0 +1,44 @@
+---
+  - hosts: all
+    vars:
+      ansible_python_interpreter: /usr/bin/env python3
+    roles:
+      - prereqs
+
+  - hosts: chn_server
+    vars:
+      ansible_python_interpreter: /usr/bin/env python3
+    tasks:
+      - name: Include CHN Server role
+        include_role:
+          name: chn-server
+
+      - name: Extract Deploy key
+        shell: docker exec chnserver awk '/DEPLOY_KEY/' /opt/config.py | awk -F ' = ' '{print $2}' | sed -e "s/'//g"
+        register: chn_deploy_key_extract
+        changed_when: false
+
+      - name: Write deploy key to a local tempfile
+        ini_file:
+          path: "/tmp/chn-deploy.ini"
+          section: 'default'
+          option: 'deploy_key'
+          value: "{{ chn_deploy_key_extract.stdout }}"
+        delegate_to: localhost
+
+  - hosts: cowrie_server
+    vars:
+      ansible_python_interpreter: /usr/bin/env python3
+    tasks:
+      - name: Lookup deploy key
+        set_fact:
+          saved_chn_deploy_key: "{{ lookup('ini', 'deploy_key section=default file=/tmp/chn-deploy.ini' ) }}"
+        delegate_to: localhost
+
+      - name: Include Cowrie
+        include_role:
+          name: cowrie
+        vars:
+          chn_deploy_key: "{{ saved_chn_deploy_key }}"
+          hpfeeds_server: "{{ internal_chn_ip }}"
+          chn_server: "http://{{ internal_chn_ip }}"

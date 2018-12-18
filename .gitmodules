@@ -1,0 +1,6 @@
+[submodule "roles/chn-server"]
+	path = roles/chn-server
+	url = https://github.com/CommunityHoneyNetwork/ansible-role-chn-server.git
+[submodule "roles/cowrie"]
+	path = roles/cowrie
+	url = https://github.com/CommunityHoneyNetwork/ansible-role-cowrie.git
