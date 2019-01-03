@@ -42,3 +42,20 @@
           chn_deploy_key: "{{ saved_chn_deploy_key }}"
           hpfeeds_server: "{{ internal_chn_ip }}"
           chn_server: "http://{{ internal_chn_ip }}"
+
+  - hosts: dionaea_server
+    vars:
+      ansible_python_interpreter: /usr/bin/env python3
+    tasks:
+      - name: Lookup deploy key
+        set_fact:
+          saved_chn_deploy_key: "{{ lookup('ini', 'deploy_key section=default file=/tmp/chn-deploy.ini' ) }}"
+        delegate_to: localhost
+
+      - name: Include Dionaea
+        include_role:
+          name: dionaea
+        vars:
+          chn_deploy_key: "{{ saved_chn_deploy_key }}"
+          chn_server: "http://{{ internal_chn_ip }}"
+          hpfeeds_server: "{{ internal_chn_ip }}"

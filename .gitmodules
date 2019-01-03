@@ -4,3 +4,6 @@
 [submodule "roles/cowrie"]
 	path = roles/cowrie
 	url = https://github.com/CommunityHoneyNetwork/ansible-role-cowrie.git
+[submodule "roles/dionaea"]
+	path = roles/dionaea
+	url = git@github.com:CommunityHoneyNetwork/ansible-role-dionaea.git

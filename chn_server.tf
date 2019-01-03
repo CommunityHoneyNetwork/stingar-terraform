@@ -1,7 +1,7 @@
 resource "aws_instance" "chn_server" {
   ami           = "${data.aws_ami.ubuntu.id}"
   instance_type = "${var.instance_type}"
-  user_data = "${file(var.user_data_file)}"
+  user_data = "${data.template_file.cloud_init.rendered}"
   vpc_security_group_ids = [
     "${aws_security_group.chn-server-sg.id}"
   ]
@@ -18,8 +18,8 @@ resource "aws_security_group" "chn-server-sg" {
 
   # TODO: How do we want to limit ssh access in?
   ingress {
-    from_port = 22
-    to_port = 22
+    from_port = "${var.real_ssh_port}"
+    to_port = "${var.real_ssh_port}"
     protocol = "tcp"
     cidr_blocks = ["${var.trusted_network}"]
   }
@@ -32,7 +32,19 @@ resource "aws_security_group" "chn-server-sg" {
       "${var.trusted_network}",
     ]
     security_groups = [
-      "${aws_security_group.cowrie-server-sg.id}"
+      "${aws_security_group.generic-honeypot-sg.id}"
+    ]
+  }
+
+  ingress {
+    from_port = 10000
+    to_port = 10000
+    protocol = "tcp"
+    cidr_blocks = [
+      "${var.trusted_network}",
+    ]
+    security_groups = [
+      "${aws_security_group.generic-honeypot-sg.id}"
     ]
   }
 
