@@ -58,7 +58,13 @@ authorized_keys = [
 ]
 ```
 
-Once your `.auto.tfvars` file is setup, build the infrastructure by running:
+Pull in submodules using the following command:
+
+```
+git submodule update --init --recursive
+```
+
+Build the infrastructure by running:
 
     terraform apply
 
