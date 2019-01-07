@@ -27,13 +27,19 @@ Currently only AWS is supported, but support for other providers is comming.
 
 ## Credentials
 
-There are a number of ways to provide your AWS account credentials for
-Terraform to use: specified statically in the .tf config in the `provider
-"aws"` object, as environment variables, in a shared credentials file, etc.
-See the [Terraform AWS Provider Credentials
-documentation](https://www.terraform.io/docs/providers/aws/) for more info. It
-is generally recommended to create an IAM user and credentials specifically for
-this use case.
+Credentials are automatically pulled from `~/.aws/credentials`.  The format of
+this file is:
+
+```
+[default]
+aws_access_key_id = YOUR_KEY_ID
+aws_secret_access_key = YOUR_ACCESS_KEY
+```
+
+More options on AWS credentials can be found here:
+
+[Terraform AWS Provider Credentials
+documentation](https://www.terraform.io/docs/providers/aws/)
 
 ## Deployment
 
