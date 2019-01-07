@@ -40,3 +40,10 @@ variable "honeypot_counts" {
     "undefined" = 1
   }
 }
+
+variable "chn_version_tag" {
+
+  description = "Tag for CHN release"
+  default = "latest"
+
+}

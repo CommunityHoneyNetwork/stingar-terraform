@@ -20,7 +20,7 @@ _playbooks_.
 
   * [Terraform](https://www.terraform.io/) >= v0.10.6
   * [Ansible](https://www.ansible.com/) >= 2.4.0.0
-  * [Terraform-Inventory](https://github.com/adammck/terraform-inventory) >= 0.6.1.  This must be installed in /usr/local/bin/terraform-inventory
+  * [Terraform-Inventory](https://github.com/adammck/terraform-inventory) >= 0.6.1.
   * A cloud provider account
 
 Currently only AWS is supported, but support for other providers is comming.
@@ -64,3 +64,34 @@ Once your `.auto.tfvars` file is setup, build the infrastructure by running:
 
 This will run through the process of creating the VPC, Subnets, Security groups
 and EC2 instances described in the Terraform configuration files.
+
+## Additional Information
+
+### Listing honeypot public IPs
+
+You can view a list of your honeypots using the terraform-inventory tool, like
+so:
+
+```
+terraform-inventory --list | jq
+```
+
+This will give you a nice view of each honeypot group and IP
+
+### Real SSH
+
+By default, the real ssh port for each honeypot is 4222.  If you would like to
+change this, add the following to your custom tfvars file:
+
+```
+real_ssh_port = 2323
+```
+
+### Logging in
+
+CHN-Server will be listning on port 80 (for now).  To retrieve the default
+username/password and IP of this host, run the following ansible playbook:
+
+```
+ansible-playbook -i $(which terraform-inventory) ./admin_password.yaml
+```
