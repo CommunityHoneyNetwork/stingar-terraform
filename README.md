@@ -27,13 +27,11 @@ Currently only AWS is supported, but support for other providers is comming.
 
 ## Credentials
 
-Credentials are automatically pulled from `~/.aws/credentials`.  The format of
-this file is:
+Set a couple environment variables to authenticate against AWS:
 
 ```
-[default]
-aws_access_key_id = YOUR_KEY_ID
-aws_secret_access_key = YOUR_ACCESS_KEY
+export AWS_ACCESS_KEY=YOUR_ACCESS_KEY
+export AWS_SECRET_KEY=YOUR_SECRET_KEY
 ```
 
 More options on AWS credentials can be found here:
