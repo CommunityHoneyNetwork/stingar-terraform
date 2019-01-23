@@ -105,3 +105,12 @@ username/password and IP of this host, run the following ansible playbook:
 ```
 ansible-playbook -i $(which terraform-inventory) ./admin_password.yaml
 ```
+
+### Supported Honeypots
+
+In addition to the CHN Server, this setup will deploy the following honeypot
+types (more coming soon!):
+
+* Cowrie
+
+* Dionaea
