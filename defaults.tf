@@ -2,6 +2,11 @@ variable "region" {
   default = "us-east-1"
 }
 
+variable "prefix" {
+  description = "Prefix for all entities"
+  default = ""
+}
+
 variable "instance_type" {
   default = "t2.micro"
 }

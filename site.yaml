@@ -26,7 +26,7 @@
           value: "{{ chn_deploy_key_extract.stdout }}"
         delegate_to: localhost
 
-  - hosts: cowrie_server
+  - hosts: "{{ prefix }}cowrie_server"
     vars:
       ansible_python_interpreter: /usr/bin/env python3
     tasks:

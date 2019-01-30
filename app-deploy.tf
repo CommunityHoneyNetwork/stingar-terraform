@@ -17,12 +17,11 @@ resource "local_file" "write_ansible_cfg" {
 resource "null_resource" "deploy_app" {
 
   provisioner "local-exec" {
-    command = "ansible-playbook -i $(which terraform-inventory) site.yaml --extra-vars=internal_chn_ip=${aws_instance.chn_server.private_ip} --extra-vars=ansible_ssh_port=${var.real_ssh_port}"
+    command = "ansible-playbook -i $(which terraform-inventory) site.yaml --extra-vars=internal_chn_ip=${aws_instance.chn_server.private_ip} --extra-vars=ansible_ssh_port=${var.real_ssh_port} prefix=${prefix}"
   } 
 
   depends_on = [
-    "aws_instance.chn_server",
-    "aws_instance.cowrie_server",
+    "aws_instance.*.*",
     "local_file.write_ansible_cfg"
   ]
 

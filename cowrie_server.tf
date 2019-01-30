@@ -1,4 +1,4 @@
-resource "aws_instance" "cowrie_server" {
+resource "aws_instance" "${prefix}cowrie_server" {
   ami           = "${data.aws_ami.ubuntu.id}"
   count         = "${lookup(var.honeypot_counts, "cowrie", var.honeypot_counts["undefined"])}"
   instance_type = "${var.instance_type}"
@@ -15,7 +15,7 @@ resource "aws_instance" "cowrie_server" {
 
 }
 
-resource "aws_security_group" "cowrie-server-sg" {
+resource "aws_security_group" "${prefix}cowrie-server-sg" {
   name        = "cowrie-server-sg"
   description = "Cowrie Server Security Group"
 
